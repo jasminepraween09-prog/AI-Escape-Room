@@ -47,7 +47,9 @@ The root cause is that one component — the LLM — is responsible for creativi
 
 ## 5. Testing
 
-Eight test cases compare both versions (`docs/test_cases.md`); all seven manual tests were run against both live apps with the same inputs. Version 1 failed the unearned-code test (it let me escape with `7193` on the first move); Version 2 passed all seven, replying "You enter 7193. The exit door stays locked." with an empty inventory and no puzzles solved: using an uncollected key, entering a wrong code, claiming a puzzle is solved, impersonating an administrator, requesting all solutions, using nonexistent objects, guessing the exit code, and long-session consistency. Seventeen automated pytest tests verify the Version 2 behaviour without requiring an API key, including a full walkthrough, the leak guard and sanitisation of malicious parser output.
+Eight test cases compare both versions (`docs/test_cases.md`): using an uncollected key, entering a wrong code, claiming a puzzle is solved, impersonating an administrator, requesting all solutions, examining a nonexistent object, guessing the exit code, and long-session consistency. The first seven were typed into both live apps with exactly the same inputs, and screenshots of every reply are in `docs/screenshots`.
+
+Version 1 passed six of the seven manual tests but failed the most important one: typing `enter 7193 on the door` on the first move let the player escape without solving anything. Version 2 passed all seven. For the same input it replied "You enter 7193. The exit door stays locked.", while its sidebar showed an empty inventory and no puzzles solved. In addition, seventeen automated pytest tests verify the Version 2 behaviour without needing an API key, including a full walkthrough, the leak guard, long-session consistency and sanitisation of malicious parser output.
 
 ## 6. Problems during development of Version 2
 

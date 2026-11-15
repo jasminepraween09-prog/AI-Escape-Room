@@ -153,7 +153,7 @@ Eight adversarial test cases compare V1 and V2 — see **[docs/test_cases.md](do
 
 ## Report
 
-The design, implementation, problems encountered and improvements are explained in **[docs/report.md](docs/report.md)**.
+The design, implementation, problems encountered and improvements are explained in **[docs/report.md](docs/report.md)** (also available as a **[PDF](docs/AI_Escape_Room_Report.pdf)** with the architecture diagrams and test screenshots).
 
 ## Technologies
 
