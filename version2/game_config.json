@@ -1,0 +1,112 @@
+{
+  "title": "The Locked Library",
+  "intro": "You wake up on the cold wooden floor of an old library. The door is shut and a keypad glows beside it. Dust hangs in the stale air. Somewhere in this room is the way out.",
+  "room_description": "A cramped, dusty library. You can see an oak desk with a drawer, a tall bookshelf, an antique globe, a painting of a lighthouse, and the exit door with its keypad.",
+
+  "objects": {
+    "desk": {
+      "name": "oak desk",
+      "aliases": ["desk", "table", "oak desk"],
+      "description": "A heavy oak desk covered in dust. A folded note lies on top. Its drawer has a small 4-digit combination dial.",
+      "reveals_items": ["note"],
+      "sets_flags": ["desk_examined"]
+    },
+    "bookshelf": {
+      "name": "bookshelf",
+      "aliases": ["bookshelf", "shelf", "shelves", "bookcase", "books", "book"],
+      "description": "Most books are grey with dust, but four stand out with fresh spines: 'Winter', 'Spring', 'Summer' and 'Autumn'. Inside each cover a single digit is handwritten: Winter 8, Spring 2, Summer 5, Autumn 4.",
+      "sets_flags": ["books_examined"]
+    },
+    "drawer": {
+      "name": "desk drawer",
+      "aliases": ["drawer", "desk drawer", "dial", "combination"],
+      "description": "The desk drawer is held shut by a 4-digit combination dial.",
+      "lock": {
+        "type": "code",
+        "code": "2548",
+        "requires_flags": ["books_examined"],
+        "puzzle_id": "drawer_code",
+        "contents": ["brass_key"],
+        "unlock_text": "The dial clicks and the drawer slides open. Inside lies a small brass key."
+      }
+    },
+    "globe": {
+      "name": "antique globe",
+      "aliases": ["globe", "antique globe", "world"],
+      "description": "A large antique globe. There is a tiny keyhole hidden on the equator.",
+      "lock": {
+        "type": "key",
+        "key_item": "brass_key",
+        "puzzle_id": "globe_key",
+        "contents": ["uv_flashlight"],
+        "unlock_text": "The brass key turns. The globe splits open along the equator, revealing a UV flashlight."
+      }
+    },
+    "painting": {
+      "name": "lighthouse painting",
+      "aliases": ["painting", "picture", "lighthouse", "canvas", "frame"],
+      "description": "An oil painting of a lighthouse at night. The brushwork around the lighthouse looks oddly thick.",
+      "interactions": {
+        "uv_flashlight": {
+          "puzzle_id": "painting_uv",
+          "sets_flags": ["door_code_seen"],
+          "text": "Under the violet light, glowing digits appear on the lighthouse: 7 1 9 3."
+        }
+      }
+    },
+    "door": {
+      "name": "exit door",
+      "aliases": ["door", "exit", "keypad", "exit door", "way out"],
+      "description": "A heavy door with a glowing 4-digit keypad. It will not budge.",
+      "lock": {
+        "type": "code",
+        "code": "7193",
+        "requires_flags": ["door_code_seen"],
+        "puzzle_id": "door_exit",
+        "contents": [],
+        "unlock_text": "The keypad flashes green. With a heavy clunk the door swings open. Fresh air rushes in — you are free!",
+        "is_exit": true
+      }
+    }
+  },
+
+  "items": {
+    "note": {
+      "name": "folded note",
+      "aliases": ["note", "paper", "folded note", "letter"],
+      "description": "The note reads: 'The seasons turn, beginning when the snow melts.'",
+      "sets_flags": ["note_read"]
+    },
+    "brass_key": {
+      "name": "brass key",
+      "aliases": ["key", "brass key", "small key"],
+      "description": "A small brass key, warm from the drawer."
+    },
+    "uv_flashlight": {
+      "name": "UV flashlight",
+      "aliases": ["flashlight", "torch", "uv", "uv flashlight", "uv light", "light"],
+      "description": "A compact flashlight that gives off a violet ultraviolet glow."
+    }
+  },
+
+  "puzzles": {
+    "drawer_code": "Open the drawer with the seasons code",
+    "globe_key": "Unlock the globe with the brass key",
+    "painting_uv": "Reveal the hidden code on the painting",
+    "door_exit": "Unlock the exit door"
+  },
+
+  "hints": [
+    {"unless_flags": ["desk_examined"], "text": "Start by examining the desk."},
+    {"unless_flags": ["note_read"], "text": "There is a note on the desk — read it."},
+    {"unless_flags": ["books_examined"], "text": "Some books on the shelf look newer than the rest."},
+    {"unless_puzzles": ["drawer_code"], "text": "The note talks about the seasons. Put the book digits in season order, starting in spring."},
+    {"unless_items": ["brass_key"], "text": "Take what you found in the drawer."},
+    {"unless_puzzles": ["globe_key"], "text": "Something round in this room has a keyhole."},
+    {"unless_items": ["uv_flashlight"], "text": "Take what was inside the globe."},
+    {"unless_puzzles": ["painting_uv"], "text": "Thick paint can hide things that only special light reveals."},
+    {"unless_puzzles": ["door_exit"], "text": "You have the code. Try it on the door keypad."}
+  ],
+
+  "max_wrong_codes_before_hint": 3
+}
